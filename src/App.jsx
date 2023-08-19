@@ -3,17 +3,23 @@ import "./App.css";
 
 export const App = () => {
   const [todoText, setTodoText] = useState('');
-  const [incompleteTodos, setIncompleteTodos] = useState(['ああああ', 'いいいい']);
+  const [inCompleteTodos, setInCompleteTodos] = useState(['ああああ', 'いいいい']);
   const [completeTodos, setCompleteTodos] = useState(['うううう']);
 
   const onChangeTodoText = (event) => setTodoText(event.target.value);
 
   const onClickAdd = () => {
     if (todoText === "") return;
-    const newTodos = [...incompleteTodos, todoText];
-    setIncompleteTodos(newTodos);
+    const newTodos = [...inCompleteTodos, todoText];
+    setInCompleteTodos(newTodos);
     setTodoText("");
-  }
+  };
+
+  const onClickDelete = (index) => {
+    const newTodos = [...inCompleteTodos];
+    newTodos.splice(index, 1);
+    setInCompleteTodos(newTodos);
+  };
 
   return (
     <>
@@ -28,13 +34,13 @@ export const App = () => {
       <div className="incomplete-area">
         <p className="title">未完了のTODO</p>
         <ul>
-          {incompleteTodos.map((todo) => {
+          {inCompleteTodos.map((todo, index) => {
             return (
               <li key={todo} className="list-wrapper">
                 <div className="list-row">
                   <p>{todo}</p>
                   <button>完了</button>
-                  <button>削除</button>
+                  <button onClick={() => onClickDelete(index)}>削除</button>
                 </div>
               </li>
             );
